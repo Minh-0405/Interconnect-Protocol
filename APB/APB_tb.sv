@@ -61,6 +61,48 @@ module APB_tb();
     endtask
 
     initial begin
+        // No wait state
+        reset() ;
+        // single write test
+        cmd_vld = 1 ;
+        cmd_write = 1 ;
+        cmd_mode = 0 ;
+        cmd_addr = 12'h4 ;
+        cmd_wdata = 32'hABC ;
+        clock(4) ;
+        cmd_vld = 0 ;
+        cmd_write = 0 ;
+        clock(1) ;
+        // burst write test
+        cmd_vld = 1 ;
+        cmd_write = 1 ;
+        cmd_mode = 1 ;
+        cmd_len = 4'd3 ;
+        cmd_addr = 12'h4 ;
+        cmd_wdata = 32'hCBA ;
+        clock(10) ;
+        cmd_vld = 0 ;
+        cmd_write = 0 ;
+        clock(1) ;
+        // single read test
+        cmd_vld = 1 ;
+        cmd_write = 0 ;
+        cmd_mode = 0 ;
+        cmd_addr = 12'h4 ;
+        clock(4) ;
+        cmd_vld = 0 ;
+        clock(1) ;
+        // burst read test
+        cmd_vld = 1 ;
+        cmd_write = 0 ;
+        cmd_mode = 1 ;
+        cmd_len = 4'd2 ;
+        cmd_addr = 12'h8 ;
+        clock(8) ;
+        cmd_vld = 0 ;
+        cmd_write = 0 ;
+        clock(2) ;
+        // Wait state
         reset() ;
         // single write test
         cmd_vld = 1 ;
